@@ -1,0 +1,21 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.price {
+  color: #43a047;
+}
+
+.deleteIcon {
+  color: #d50000;
+}
+
+.productRow {
+  border: 2px solid black;
+  border-radius: 5px;
+}

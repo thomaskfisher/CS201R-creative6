@@ -1,0 +1,107 @@
+<html>
+<head>
+  <title>BrigsList!</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
+  <link rel="stylesheet" href="stylesheets/style.css"> 
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
+  <script src="javascripts/app.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script>
+  $(document).ready(function(){
+    console.log($('#newListingForm'));
+    $('#newListingForm').hide();
+    $('#hideListingForm').hide();
+
+    $("#createListingButton").click(function(){
+        $("#newListingForm").show();
+        $("#hideListingForm").show();
+        $("#createListingButton").hide();
+    });
+    $('#deleteListingButton').click(function(){
+        $('.delete').show();
+    });
+    $('#hideListingForm').click(function(){
+      $('#newListingForm').hide();
+      $("#hideListingForm").hide();
+      $("#createListingButton").show();
+    });
+  });
+  </script>
+
+</head>
+<body ng-app="comment" ng-controller="MainCtrl">
+
+<div class="container">
+    <div class="row">
+<div class="col-md-6 col-md-offset-3">
+<div class="page-header">
+  <h1>Welcome to BrigsList!</h1>
+  <a class="waves-effect waves-light deep-purple darken-3  btn" id="createListingButton">Create a New Listing</a>
+  <a class="waves-effect waves-light deep-purple darken-3  btn" id="hideListingForm">Hide Listing Form</a>
+</div>
+
+  <form ng-submit="addComment()" style = "margin-top30px;">
+  <div id="newListingForm">
+    <div class="row">
+      <div class="input-field col s6">
+        <input type="text" ng-model="formTitle" placeholder="Title"></input>
+      </div>
+      <div class="input-field col s6">
+        <input type="text" ng-model="formPrice" placeholder="Price"></input>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="input-field col s6">
+        <input type="text" ng-model="formDesc" placeholder="Description"></input>
+      </div>
+      <div class="input-field col s6">
+        <input type="text" ng-model="formPicture" placeholder="Image URL"></input>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="input-field col s6">
+         <input type="text" ng-model="formOwner" placeholder="First Name"></input>
+      </div>
+      <div class="input-field col s6">
+        <input type="tel" ng-model="formContact" placeholder="Phone Number"></input>
+      </div>
+    </div>
+   
+    <button class="waves-effect waves-light deep-purple darken-3  btn" type="submit" id="create">Create New Listing</button>
+  
+  </div>
+  </form>
+  </div>
+  </div>
+
+  <br /><br /><br /><br />
+
+<div class="productList">
+  <div ng-repeat="comment in comments | orderBy: '-upvotes'">
+    <div class="row productRow">       
+      <div class="col m4">
+        <img width="250px" height="250px" src={{comment.picture}}>
+      </div>
+      <div class="col m6">
+        <h3>{{comment.title}}</h3>
+        <h6>{{comment.description}}</h6>
+        <p class="price">${{comment.price}}</p>
+      </div>
+      <div class="col m2">
+        <p>Contact: {{comment.owner}}</p>
+        <p>{{comment.contact}}</p>
+        <!-- <p>{{comment.is_sold}}</p> -->  
+         <a class="material-icons deleteIcon" ng-click="delete(comment)" href="#">delete</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
+
