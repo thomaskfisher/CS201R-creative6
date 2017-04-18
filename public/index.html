@@ -8,8 +8,26 @@
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
   <script src="javascripts/app.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+  
+<script src="https://www.gstatic.com/firebasejs/3.7.8/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDefjHhPY2m_lyFm7kBNFp7P2jwd-8L2xI",
+    authDomain: "briggslist-e72d2.firebaseapp.com",
+    databaseURL: "https://briggslist-e72d2.firebaseio.com",
+    projectId: "briggslist-e72d2",
+    storageBucket: "briggslist-e72d2.appspot.com",
+    messagingSenderId: "496074338686"
+  };
+  firebase.initializeApp(config);
+</script>
+
   <script>
   $(document).ready(function(){
+    $(".dropdown-button").dropdown();
+
     console.log($('#newListingForm'));
     $('#newListingForm').hide();
     $('#hideListingForm').hide();
@@ -27,20 +45,75 @@
       $("#hideListingForm").hide();
       $("#createListingButton").show();
     });
+
+
+
+    firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      // User is signed in.
+      var user = firebase.auth().currentUser;
+      var name, email, photoUrl, uid, emailVerified;
+
+      name = user.displayName;
+      email = user.email;
+      photoUrl = user.photoURL;
+      emailVerified = user.emailVerified;
+      uid = user.getToken();
+      document.getElementById('login-button').textContent = name;
+      //document.getElementById('login-button').innerHTML = name+"<i class=\"material-icons right\">arrow_drop_down</i>"
+
+    } else {
+      // No user is signed in.
+      //document.getElementById('login-button').innerHTML = 'Login<i class=\"material-icons right\">arrow_drop_down</i>';
+      document.getElementById('login-button').textContent = 'Login';
+    }
+  });
+    
   });
   </script>
 
+
+
+
+
+
+
 </head>
 <body ng-app="comment" ng-controller="MainCtrl">
+
+<nav>
+<div class="container">
+    <div class="nav-wrapper">
+      <a href="/" class="brand-logo">BriggsList</a>
+      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="/">Home</a></li>
+        <li><a href="auth.html" id='login-button'>Login</a></li>
+      </ul>
+    </div>
+</div>
+  </nav>
+
+
+
+
+
+
+
 
 <div class="container">
     <div class="row">
 <div class="col-md-6 col-md-offset-3">
 <div class="page-header">
   <h1>Welcome to BrigsList!</h1>
-  <a class="waves-effect waves-light deep-purple darken-3  btn" id="createListingButton">Create a New Listing</a>
-  <a class="waves-effect waves-light deep-purple darken-3  btn" id="hideListingForm">Hide Listing Form</a>
+  <div id='hideDaForm'>
+    <a class="waves-effect waves-light deep-purple darken-3  btn" id="createListingButton">Create a New Listing</a>
+    <a class="waves-effect waves-light deep-purple darken-3  btn" id="hideListingForm">Hide Listing Form</a>
+  </div>
 </div>
+
+
+
 
   <form ng-submit="addComment()" style = "margin-top30px;">
   <div id="newListingForm">
